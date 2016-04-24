@@ -1,0 +1,76 @@
+
+
+<div class="row search">
+
+	<div class="col-sm-6 col-sm-offset-3 well">
+		<h3>Book Tour Guides</h3>
+
+			<%= form_tag(tour_times_path, method: "get") do %>
+
+				<div class="form-group col-md-12 rm-p">
+					<%= label_tag(:tour_id, "Tour:") %>
+					<%= select_tag(:tour_id, options_for_select(@tour, @tour_id), class: "form-control") %>
+				 
+				</div>
+				<div class="form-group col-md-6 rm-p">
+					<%= label_tag(:departure_date, "Tour Date:") %>
+					<%= select_tag(:departure_date, options_for_select(@dates, @depart_date), class: "form-control") %>
+				</div>
+
+				<div class="form-group col-md-6">
+					<%= label_tag(:passengers, "Number of Passengers:") %>
+					<%= select_tag(:passengers, options_for_select(@passenger_options, @passengers), class: "form-control") %>
+				</div>
+
+				<%= submit_tag "Search Times", class: "btn btn-primary col-md-4 col-md-offset-8" %>
+			<% end %>
+	</div>
+</div>
+				
+
+  			
+<% if @tour_time.present? %>
+
+	<div class="row search-results">
+
+		<div class="col-sm-6 col-sm-offset-3 well">
+			<h3>Choose a tour time </h3>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Tour ID:</th>
+						<th>Duration:</th>
+						<th>Cost:</th>
+						<th>Start Time:</th>
+					</tr>
+				</thead>
+
+				<%= form_tag(new_booking_path, method: "get") do %>
+					<tbody>
+						<% @tour_time.each do |tour_time| %>
+							<tr>
+								<td><%= radio_button_tag(:tour_time_id, tour_time.id,class: "Select a Time")  %></td>
+								<td><%= tour_time.tour.title %></td>
+								<td><%= tour_time.duration %><em> /hours <small>*</small></em></td>
+								<td><%= number_to_currency(tour_time.tour.cost.round(2), unit: "€")%><em> /per person</em> </td>
+								<td><%= tour_time.departure_date.strftime("%H:%M") %></td>
+							</tr>
+						<% end %>
+					</tbody>
+			</table>
+					
+					<%= hidden_field_tag(:tour_id, params[:tour_id]) %>
+					<%= hidden_field_tag(:passengers, params[:passengers]) %>
+					<%= submit_tag "Continue", class: "btn btn-success col-md-4 col-md-offset-8" %>
+					<small>*duration is a rough estimate, not exact</small>
+				<% end %>
+						
+		</div>
+	</div>
+	
+ 
+
+<% end %>
+

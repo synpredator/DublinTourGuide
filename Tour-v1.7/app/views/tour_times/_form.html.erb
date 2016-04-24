@@ -1,0 +1,29 @@
+<%= form_for(@tour_time) do |f| %>
+  <% if @tour_time.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tour_time.errors.count, "error") %> prohibited this tour_time from being saved:</h2>
+
+      <ul>
+      <% @tour_time.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :tour_id %><br>
+    <%= f.text_field :tour_id, class: 'form-control'  %>
+  </div>
+  <div class="form-group">
+    <%= f.label :duration %><br>
+    <%= f.number_field :duration, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :departure_date %><br>
+    <%= f.datetime_select :departure_date, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit %>
+  </div>
+<% end %>

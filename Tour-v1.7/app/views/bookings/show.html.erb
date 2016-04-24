@@ -1,0 +1,59 @@
+
+<div class="row">
+	
+<div class="col-md-10 col-md-offset-1 clearfix">
+	<div class="alert alert-success" role="alert">Your Tour has Been Booked!</div>
+</div>
+
+<div class="col-md-10 col-md-offset-1 well booking">
+	
+ 
+		<h3>Guide Tour Details</h3>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Booking Number:</th>
+					<th>Tour Name</th>
+					<th>Departure Date</th>
+					<th>Departure Time</th>
+		 
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td># <%= @booking.id %></td>
+					<td><%= @booking.tour_time.tour.title %></td>
+					<td><%= @booking.tour_time.departure_date.strftime("%d/%m/%Y") %></td>
+					<td><%= @booking.tour_time.departure_date.strftime("%H:%M") %></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>Passenger details</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>DOB </th>
+					<th>Email</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @booking.passengers.each do |p| %>
+					<tr>
+						<td><%= p.first_name %></td>
+						<td><%= p.last_name %></td>
+						<td><%= p.dob.strftime("%d/%m/%Y") %></td>
+						<td><%= p.email %></td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= link_to "View Account Details", current_user , class: "btn btn-block btn-sm btn-primary" %>
+	</div>
+</div>
+

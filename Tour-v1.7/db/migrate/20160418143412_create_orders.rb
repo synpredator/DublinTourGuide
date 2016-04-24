@@ -1,0 +1,13 @@
+class CreateOrders < ActiveRecord::Migration
+  def change
+    create_table :orders do |t|
+      t.references :user, index: true
+      t.references :tour, index: true
+      t.string :tour_time
+
+      t.timestamps null: false
+    end
+    add_foreign_key :orders, :users
+    add_foreign_key :orders, :tours
+  end
+end

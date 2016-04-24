@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dublin Tours</title>
+  <%=stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track'=> true %>
+    <%=javascript_include_tag 'application', 'data-turbolinks-track'=> true %>
+      <%=csrf_meta_tags %>
+</head>
+
+<body>
+ 
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "Dublin Guide Tours", root_path, class: "navbar-brand"  %>
+         
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <%=link_to "View All Tours",tours_path %>
+          </li>
+          <li>
+            <%= link_to "About Us", about_path %>
+            
+          </li>
+          <li>
+            <%= link_to "F.A.Q", faq_path %>
+            
+          </li>
+ 
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome Back
+                <%= current_user.first_name %> <span class="caret"> </span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <%=link_to "View profile",current_user %>
+                </li>
+                <li>
+                  <%=link_to "Edit profile", edit_user_registration_path %>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <%=link_to "View Orders", current_user %>
+                </li>
+              </ul>
+            </li>
+            <li></li>
+            <li>
+              <%=link_to "Logout", destroy_user_session_path, :method=> :delete %></li>
+            <% else %>
+              <li>
+                <%=link_to "Register", new_user_registration_path %>
+              </li>
+              <li>
+                <%=link_to "Login", new_user_session_path %>
+              </li>
+
+              <% end %>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <% if current_user.try(:admin?) %>
+  <div class="container">
+    <div class="row well well-sm"><strong>Admin Panel</strong> | 
+  <%= link_to 'Add New Tour', new_tour_path, :class=> "btn btn-sm btn-default" %>
+  <%= link_to 'Add Tour Times', new_tour_time_path, :class=> "btn btn-sm btn-default" %>
+  <%= link_to 'List All Bookings', bookings_path, :class=> "btn btn-sm btn-default" %>
+  <%= link_to 'List All Users', users_path, :class=> "btn btn-sm btn-default" %>
+  </div>
+  </div>
+  <% end %>
+    <% if notice %>
+  <div class="row">
+    <div class="container"> 
+      <div  class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= notice %>
+       
+      </p>
+    </div>
+  </div>
+  <% end %>
+  <div class="container">
+
+    <%=yield %>
+    <footer class="footer">
+
+      <p>&copy; <%= Time.now.year %> Dublin Guide Tours</p>
+    </footer>
+  </div>
+
+</body>
+
+</html>
